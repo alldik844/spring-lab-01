@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -35,6 +37,25 @@ public class HelloController {
         return "Application is running";
     }
 
+    // Individual Assignment — Variant 10
+    @GetMapping("/prime")
+    public PrimeResult prime(@RequestParam int n) {
+
+        List<Integer> divisors = new ArrayList<>();
+
+        if (n > 0) {
+            for (int i = 1; i <= n; i++) {
+                if (n % i == 0) {
+                    divisors.add(i);
+                }
+            }
+        }
+
+        boolean isPrime = n > 1 && divisors.size() == 2;
+
+        return new PrimeResult(n, isPrime, divisors);
+    }
+
     public record Greeting(
             String message,
             String owner,
@@ -45,5 +66,11 @@ public class HelloController {
             String owner,
             String javaVersion,
             int processors
+    ) {}
+
+    public record PrimeResult(
+            int number,
+            boolean prime,
+            List<Integer> divisors
     ) {}
 }
