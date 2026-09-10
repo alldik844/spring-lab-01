@@ -14,7 +14,11 @@ public class HelloController {
 
     @GetMapping("/hello")
     public Greeting hello(@RequestParam(defaultValue = "world") String name) {
-        return new Greeting("Hello, " + name + "!", owner, LocalDateTime.now());
+        return new Greeting(
+                "Hello, " + name + "!",
+                owner,
+                LocalDateTime.now()
+        );
     }
 
     @GetMapping("/info")
@@ -26,7 +30,20 @@ public class HelloController {
         );
     }
 
-    public record Greeting(String message, String owner, LocalDateTime timestamp) { }
+    @GetMapping("/status")
+    public String status() {
+        return "Application is running";
+    }
 
-    public record Info(String owner, String javaVersion, int cpuCores) { }
+    public record Greeting(
+            String message,
+            String owner,
+            LocalDateTime timestamp
+    ) {}
+
+    public record Info(
+            String owner,
+            String javaVersion,
+            int processors
+    ) {}
 }
