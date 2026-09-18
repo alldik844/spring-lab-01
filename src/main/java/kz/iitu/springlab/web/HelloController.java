@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -14,7 +16,11 @@ public class HelloController {
 
     @GetMapping("/hello")
     public Greeting hello(@RequestParam(defaultValue = "world") String name) {
-        return new Greeting("Hello, " + name + "!", owner, LocalDateTime.now());
+        return new Greeting(
+                "Hello, " + name + "!",
+                owner,
+                LocalDateTime.now()
+        );
     }
 
     @GetMapping("/info")
@@ -26,7 +32,45 @@ public class HelloController {
         );
     }
 
-    public record Greeting(String message, String owner, LocalDateTime timestamp) { }
+    @GetMapping("/status")
+    public String status() {
+        return "Application is running";
+    }
 
-    public record Info(String owner, String javaVersion, int cpuCores) { }
+    // Individual Assignment — Variant 10
+    @GetMapping("/prime")
+    public PrimeResult prime(@RequestParam int n) {
+
+        List<Integer> divisors = new ArrayList<>();
+
+        if (n > 0) {
+            for (int i = 1; i <= n; i++) {
+                if (n % i == 0) {
+                    divisors.add(i);
+                }
+            }
+        }
+
+        boolean isPrime = n > 1 && divisors.size() == 2;
+
+        return new PrimeResult(n, isPrime, divisors);
+    }
+
+    public record Greeting(
+            String message,
+            String owner,
+            LocalDateTime timestamp
+    ) {}
+
+    public record Info(
+            String owner,
+            String javaVersion,
+            int processors
+    ) {}
+
+    public record PrimeResult(
+            int number,
+            boolean prime,
+            List<Integer> divisors
+    ) {}
 }
