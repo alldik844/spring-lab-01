@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Catalogue</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 th:text="${title}">Catalogue</h1>
+
+    <!-- Flash message -->
+    <p th:if="${message}"
+       class="flash"
+       th:text="${message}">
+    </p>
+
+    <!-- Filter -->
+    <div class="card">
+        <h2>Filter by author</h2>
+
+        <form method="get" action="/books">
+            <input
+                    type="text"
+                    name="author"
+                    placeholder="Author"
+                    th:value="${author}">
+
+            <button type="submit">Search</button>
+
+            <a href="/books">Reset</a>
+        </form>
+    </div>
+
+    <!-- Add book -->
+    <div class="card">
+        <h2>Add a new book</h2>
+
+        <form method="post" action="/books">
+
+            <input
+                    type="text"
+                    name="title"
+                    placeholder="Title"
+                    required>
+
+            <input
+                    type="text"
+                    name="author"
+                    placeholder="Author"
+                    required>
+
+            <input
+                    type="number"
+                    name="year"
+                    placeholder="Year"
+                    required>
+
+            <button type="submit">Add book</button>
+
+        </form>
+    </div>
+
+    <!-- Books table -->
+    <div class="card">
+
+        <h2>Books</h2>
+
+        <table>
+
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Year</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="book : ${books}">
+                <td th:text="${book.id}">1</td>
+                <td th:text="${book.title}">Title</td>
+                <td th:text="${book.author}">Author</td>
+                <td th:text="${book.year}">2020</td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
