@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -16,24 +17,8 @@
 	<artifactId>spring-lab-01</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name/>
-	<description/>
-	<url/>
-
-	<licenses>
-		<license/>
-	</licenses>
-
-	<developers>
-		<developer/>
-	</developers>
-
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+	<name>spring-lab-01</name>
+	<description>Spring Boot Laboratory Project</description>
 
 	<properties>
 		<java.version>25</java.version>
@@ -59,30 +44,64 @@
 			<artifactId>spring-boot-starter-aspectj</artifactId>
 		</dependency>
 
-		<!-- Tests -->
+		<!-- Web MVC Tests -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 
-		<!-- LAB 3: Bean Validation -->
+		<!-- Bean Validation -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 
-		<!-- LAB 3: Configuration Properties metadata -->
+		<!-- Configuration Properties -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
 
-		<!-- Actuator -->
+		<!-- Spring Boot Actuator -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- LAB: Spring Transactions -->
+
+		<!-- Spring Data JPA -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<!-- H2 Database -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- H2 Web Console -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-h2console</artifactId>
+		</dependency>
+
+		<!-- Flyway Migration -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-flyway</artifactId>
+		</dependency>
+
+		<!-- Spring Data JPA Tests -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>
