@@ -1,16 +1,65 @@
+
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title th:text="${title}">Catalogue</title>
-    <link rel="stylesheet" th:href="@{/css/app.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
 </head>
 
 <body>
 
 <div class="container">
 
-    <h1 th:text="${title}">Catalogue</h1>
+    <h1 th:text="${title}">
+        Catalogue
+    </h1>
+
+    <!-- Current user information -->
+    <div class="card">
+
+        <h2>Spring Security - Lab 10</h2>
+
+        <p>
+            Logged in as:
+            <strong sec:authentication="name">
+                username
+            </strong>
+        </p>
+
+        <p>
+            Authorities:
+            <span sec:authentication="principal.authorities">
+                [ROLE_USER]
+            </span>
+        </p>
+
+        <!-- ADMIN link -->
+        <p sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/admin}">
+                Administration Panel
+            </a>
+        </p>
+
+        <!-- Logout form -->
+        <form th:action="@{/logout}"
+              method="post">
+
+            <button type="submit">
+                Logout
+            </button>
+        </form>
+
+    </div>
 
     <!-- Flash message -->
     <p th:if="${message}"
@@ -20,26 +69,37 @@
 
     <!-- Filter -->
     <div class="card">
+
         <h2>Filter by author</h2>
 
-        <form method="get" action="/books">
+        <form th:action="@{/books}"
+              method="get">
+
             <input
                     type="text"
                     name="author"
                     placeholder="Author"
                     th:value="${author}">
 
-            <button type="submit">Search</button>
+            <button type="submit">
+                Search
+            </button>
 
-            <a href="/books">Reset</a>
+            <a th:href="@{/books}">
+                Reset
+            </a>
+
         </form>
     </div>
 
-    <!-- Add book -->
-    <div class="card">
+    <!-- Add book: ADMIN only -->
+    <div class="card"
+         sec:authorize="hasRole('ADMIN')">
+
         <h2>Add a new book</h2>
 
-        <form method="post" action="/books">
+        <form th:action="@{/books}"
+              method="post">
 
             <input
                     type="text"
@@ -59,7 +119,9 @@
                     placeholder="Year"
                     required>
 
-            <button type="submit">Add book</button>
+            <button type="submit">
+                Add book
+            </button>
 
         </form>
     </div>
@@ -77,16 +139,49 @@
                 <th>Title</th>
                 <th>Author</th>
                 <th>Year</th>
+
+                <th sec:authorize="hasRole('ADMIN')">
+                    Actions
+                </th>
             </tr>
             </thead>
 
             <tbody>
 
             <tr th:each="book : ${books}">
-                <td th:text="${book.id}">1</td>
-                <td th:text="${book.title}">Title</td>
-                <td th:text="${book.author}">Author</td>
-                <td th:text="${book.year}">2020</td>
+
+                <td th:text="${book.id}">
+                    1
+                </td>
+
+                <td th:text="${book.title}">
+                    Title
+                </td>
+
+                <td th:text="${book.author}">
+                    Author
+                </td>
+
+                <td th:text="${book.year}">
+                    2020
+                </td>
+
+                <!-- Delete: ADMIN only -->
+                <td sec:authorize="hasRole('ADMIN')">
+
+                    <form
+                            th:action="@{/books/{id}/delete(id=${book.id})}"
+                            method="post">
+
+                        <button type="submit"
+                                onclick="return confirm('Delete this book?')">
+                            Delete
+                        </button>
+
+                    </form>
+
+                </td>
+
             </tr>
 
             </tbody>
