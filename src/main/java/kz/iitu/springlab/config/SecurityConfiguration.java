@@ -43,6 +43,19 @@ public class SecurityConfiguration {
                         .requestMatchers("/h2-console/**")
                         .hasRole("ADMIN")
 
+                        // LAB 12: Book REST API
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/books",
+                                "/api/books/**"
+                        ).hasAnyRole("USER", "ADMIN")
+
+                        .requestMatchers(
+                                "/api/books",
+                                "/api/books/**"
+                        ).hasRole("ADMIN")
+
+                        // Book HTML pages
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/books",

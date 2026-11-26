@@ -1,3 +1,4 @@
+
 package kz.iitu.springlab.notify;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -5,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Service
@@ -50,5 +52,29 @@ public class NotificationService {
 
     public Set<String> names() {
         return byName.keySet();
+    }
+
+    public String viaChannel(String channel, String message) {
+        Notifier notifier = byName.get(channel);
+
+        if (notifier == null) {
+            throw new NoSuchElementException(
+                    "Notifier not found: " + channel
+            );
+        }
+
+        return notifier.send(message);
+    }
+
+    public String notifyReader(
+            String readerId,
+            String message,
+            boolean notificationsEnabled) {
+
+        if (!notificationsEnabled) {
+            return "notifications disabled";
+        }
+
+        return primary.send(message);
     }
 }
